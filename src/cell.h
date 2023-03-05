@@ -27,9 +27,9 @@ struct Node {
             color[2] = 0.0f;
             }
         }
-        bool compareCells(Cell& otherCell) {
-            if(x == otherCell.x) {
-                if(y == otherCell.y) {
+        bool compareCells(Cell* otherCell) {
+            if(x == otherCell->x) {
+                if(y == otherCell->y) {
                     return true;
                 }
             }

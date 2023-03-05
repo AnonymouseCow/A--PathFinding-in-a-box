@@ -3,9 +3,6 @@
 
 CMakeFiles/pathing.dir/src/astar.cpp.o: src/astar.cpp \
   /usr/include/stdc-predef.h \
-  src/astar.h \
-  src/grid.h \
-  src/cell.h \
   src/astarfinder.h \
   /usr/include/c++/12/iostream \
   /usr/include/x86_64-linux-gnu/c++/12/bits/c++config.h \
@@ -208,6 +205,9 @@ CMakeFiles/pathing.dir/src/astar.cpp.o: src/astar.cpp \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/linux/close_range.h \
+  src/grid.h \
+  src/cell.h \
+  src/astar.h \
   /usr/include/c++/12/queue \
   /usr/include/c++/12/deque \
   /usr/include/c++/12/bits/stl_deque.h \
@@ -221,7 +221,34 @@ CMakeFiles/pathing.dir/src/astar.cpp.o: src/astar.cpp \
   /usr/include/c++/12/bits/node_handle.h \
   /usr/include/c++/12/bits/stl_set.h \
   /usr/include/c++/12/bits/stl_multiset.h \
-  /usr/include/c++/12/bits/erase_if.h
+  /usr/include/c++/12/bits/erase_if.h \
+  src/nodecomp.h \
+  /usr/include/c++/12/math.h \
+  /usr/include/c++/12/cmath \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/c++/12/bits/specfun.h \
+  /usr/include/c++/12/limits \
+  /usr/include/c++/12/tr1/gamma.tcc \
+  /usr/include/c++/12/tr1/special_function_util.h \
+  /usr/include/c++/12/tr1/bessel_function.tcc \
+  /usr/include/c++/12/tr1/beta_function.tcc \
+  /usr/include/c++/12/tr1/ell_integral.tcc \
+  /usr/include/c++/12/tr1/exp_integral.tcc \
+  /usr/include/c++/12/tr1/hypergeometric.tcc \
+  /usr/include/c++/12/tr1/legendre_function.tcc \
+  /usr/include/c++/12/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/12/tr1/poly_hermite.tcc \
+  /usr/include/c++/12/tr1/poly_laguerre.tcc \
+  /usr/include/c++/12/tr1/riemann_zeta.tcc
 
 CMakeFiles/pathing.dir/src/grid.cpp.o: src/grid.cpp \
   /usr/include/stdc-predef.h \
@@ -428,7 +455,23 @@ CMakeFiles/pathing.dir/src/grid.cpp.o: src/grid.cpp \
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
-  /usr/include/linux/close_range.h
+  /usr/include/linux/close_range.h \
+  src/astar.h \
+  /usr/include/c++/12/queue \
+  /usr/include/c++/12/deque \
+  /usr/include/c++/12/bits/stl_deque.h \
+  /usr/include/c++/12/bits/deque.tcc \
+  /usr/include/c++/12/bits/stl_heap.h \
+  /usr/include/c++/12/bits/stl_queue.h \
+  /usr/include/c++/12/bits/uses_allocator.h \
+  /usr/include/c++/12/set \
+  /usr/include/c++/12/bits/stl_tree.h \
+  /usr/include/c++/12/ext/aligned_buffer.h \
+  /usr/include/c++/12/bits/node_handle.h \
+  /usr/include/c++/12/bits/stl_set.h \
+  /usr/include/c++/12/bits/stl_multiset.h \
+  /usr/include/c++/12/bits/erase_if.h \
+  src/nodecomp.h
 
 CMakeFiles/pathing.dir/src/window.cpp.o: src/window.cpp \
   /usr/include/stdc-predef.h \
@@ -635,8 +678,52 @@ CMakeFiles/pathing.dir/src/window.cpp.o: src/window.cpp \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/linux/close_range.h \
-  src/grid.h
+  src/grid.h \
+  src/astar.h \
+  /usr/include/c++/12/queue \
+  /usr/include/c++/12/deque \
+  /usr/include/c++/12/bits/stl_deque.h \
+  /usr/include/c++/12/bits/deque.tcc \
+  /usr/include/c++/12/bits/stl_heap.h \
+  /usr/include/c++/12/bits/stl_queue.h \
+  /usr/include/c++/12/bits/uses_allocator.h \
+  /usr/include/c++/12/set \
+  /usr/include/c++/12/bits/stl_tree.h \
+  /usr/include/c++/12/ext/aligned_buffer.h \
+  /usr/include/c++/12/bits/node_handle.h \
+  /usr/include/c++/12/bits/stl_set.h \
+  /usr/include/c++/12/bits/stl_multiset.h \
+  /usr/include/c++/12/bits/erase_if.h \
+  src/nodecomp.h
 
+
+/usr/include/c++/12/tr1/riemann_zeta.tcc:
+
+/usr/include/c++/12/tr1/poly_laguerre.tcc:
+
+/usr/include/c++/12/tr1/modified_bessel_func.tcc:
+
+/usr/include/c++/12/tr1/legendre_function.tcc:
+
+/usr/include/c++/12/tr1/hypergeometric.tcc:
+
+/usr/include/c++/12/tr1/ell_integral.tcc:
+
+/usr/include/c++/12/tr1/bessel_function.tcc:
+
+/usr/include/c++/12/tr1/gamma.tcc:
+
+/usr/include/c++/12/limits:
+
+/usr/include/c++/12/bits/specfun.h:
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/include/c++/12/bits/erase_if.h:
 
@@ -649,6 +736,10 @@ CMakeFiles/pathing.dir/src/window.cpp.o: src/window.cpp \
 /usr/include/c++/12/deque:
 
 /usr/include/c++/12/queue:
+
+src/astar.h:
+
+src/grid.h:
 
 /usr/include/linux/close_range.h:
 
@@ -695,6 +786,8 @@ src/grid.cpp:
 /usr/include/c++/12/bits/basic_string.tcc:
 
 /usr/include/c++/12/bits/charconv.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
@@ -748,13 +841,13 @@ src/grid.cpp:
 
 /usr/include/c++/12/ext/alloc_traits.h:
 
-/usr/include/c++/12/initializer_list:
-
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/c++/12/bits/hash_bytes.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/c++/12/tr1/exp_integral.tcc:
 
 /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h:
 
@@ -782,6 +875,8 @@ src/grid.cpp:
 
 /usr/include/c++/12/bits/locale_classes.h:
 
+/usr/include/c++/12/tr1/poly_hermite.tcc:
+
 /usr/include/GL/glu.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
@@ -791,6 +886,8 @@ src/grid.cpp:
 /usr/include/x86_64-linux-gnu/c++/12/bits/error_constants.h:
 
 /usr/include/x86_64-linux-gnu/c++/12/bits/cpu_defines.h:
+
+src/nodecomp.h:
 
 /usr/include/c++/12/bits/istream.tcc:
 
@@ -802,27 +899,37 @@ src/grid.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
-/usr/include/asm-generic/errno-base.h:
-
-/usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h:
-
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
-/usr/include/c++/12/bits/basic_string.h:
+/usr/include/asm-generic/errno-base.h:
 
-/usr/include/c++/12/ext/type_traits.h:
+/usr/lib/gcc/x86_64-linux-gnu/12/include/stddef.h:
 
-/usr/include/GL/freeglut_std.h:
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
+/usr/include/x86_64-linux-gnu/bits/types.h:
 
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+/usr/include/c++/12/bits/locale_classes.tcc:
 
-src/grid.h:
+/usr/include/c++/12/bits/exception.h:
+
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/c++/12/bits/ptr_traits.h:
+
+src/cell.h:
+
+/usr/include/unistd.h:
+
+/usr/include/x86_64-linux-gnu/sys/select.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
 
 /usr/include/c++/12/new:
+
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
 
 /usr/include/c++/12/exception:
 
@@ -838,6 +945,8 @@ src/grid.h:
 
 /usr/include/c++/12/type_traits:
 
+/usr/include/c++/12/tr1/beta_function.tcc:
+
 /usr/include/x86_64-linux-gnu/c++/12/bits/gthr.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
@@ -848,9 +957,23 @@ src/window.cpp:
 
 /usr/include/x86_64-linux-gnu/c++/12/bits/os_defines.h:
 
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/c++/12/bits/c++locale.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
 /usr/include/c++/12/bits/stl_pair.h:
 
+/usr/include/c++/12/cmath:
+
 /usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
 /usr/include/x86_64-linux-gnu/c++/12/bits/gthr-default.h:
 
@@ -860,23 +983,7 @@ src/window.cpp:
 
 /usr/include/stdc-predef.h:
 
-src/astar.h:
-
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
-/usr/include/c++/12/bits/locale_classes.tcc:
-
-/usr/include/c++/12/bits/exception.h:
-
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
-
-/usr/include/c++/12/bits/ptr_traits.h:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
 
 /usr/include/c++/12/bits/node_handle.h:
 
@@ -890,17 +997,31 @@ src/astar.h:
 
 /usr/include/pthread.h:
 
+/usr/include/c++/12/tr1/special_function_util.h:
+
 /usr/include/c++/12/ostream:
 
 /usr/include/c++/12/bits/stl_tree.h:
 
 /usr/include/c++/12/ios:
 
+/usr/include/c++/12/istream:
+
+/usr/include/c++/12/stdexcept:
+
+/usr/include/c++/12/string_view:
+
+/usr/include/c++/12/cctype:
+
+/usr/include/features-time64.h:
+
 /usr/include/linux/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
 /usr/include/c++/12/iosfwd:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
 /usr/include/c++/12/bits/memoryfwd.h:
 
@@ -916,29 +1037,11 @@ src/astar.h:
 
 /usr/include/wchar.h:
 
-/usr/include/unistd.h:
+/usr/include/GL/freeglut_std.h:
 
-/usr/include/x86_64-linux-gnu/sys/select.h:
+/usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
-src/cell.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
-
-/usr/include/x86_64-linux-gnu/c++/12/bits/c++locale.h:
-
-/usr/include/c++/12/istream:
-
-/usr/include/c++/12/stdexcept:
-
-/usr/include/c++/12/string_view:
-
-/usr/include/features-time64.h:
-
-/usr/include/c++/12/cctype:
+/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
 /usr/include/c++/12/bits/localefwd.h:
 
@@ -984,10 +1087,6 @@ src/astar.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
-/usr/include/c++/12/bits/range_access.h:
-
-/usr/include/time.h:
-
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
@@ -1010,13 +1109,17 @@ src/astar.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/x86_64-linux-gnu/c++/12/bits/atomic_word.h:
+/usr/include/c++/12/initializer_list:
 
-/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
+/usr/include/c++/12/math.h:
+
+/usr/include/x86_64-linux-gnu/c++/12/bits/atomic_word.h:
 
 /usr/include/c++/12/ext/atomicity.h:
 
 /usr/include/c++/12/string:
+
+/usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
@@ -1064,6 +1167,8 @@ src/astarfinder.h:
 
 /usr/include/c++/12/bits/stl_function.h:
 
+/usr/include/math.h:
+
 /usr/include/c++/12/pstl/pstl_config.h:
 
 /usr/include/c++/12/ext/numeric_traits.h:
@@ -1083,3 +1188,11 @@ src/astarfinder.h:
 /usr/include/c++/12/bits/functexcept.h:
 
 /usr/include/c++/12/bits/invoke.h:
+
+/usr/include/time.h:
+
+/usr/include/c++/12/bits/range_access.h:
+
+/usr/include/c++/12/ext/type_traits.h:
+
+/usr/include/c++/12/bits/basic_string.h:

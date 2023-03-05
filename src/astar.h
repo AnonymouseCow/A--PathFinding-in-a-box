@@ -1,14 +1,20 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 
-#include "grid.h"
 #include "cell.h"
-
+#include <queue>
+#include <set>
+#include "nodecomp.h"
 class AStar {
 public:
     AStar();
-    std::vector<Node*> findPath(Cell& startCell, Cell& endCell);
+    void findPath(Cell* startCell, Cell* endCell);
+    std::priority_queue<Node*, std::vector<Node*>, NodeCompareA>* getPrio();
+    std::set<Node*>* getClosed();
 private:
+
+    static std::priority_queue<Node*, std::vector<Node*>, NodeCompareA> open;
+    static std::set<Node*> closed;
     std::vector<Node*> reconstructPath(Node* endNode);
     std::vector<Node*> getNeighbours(Node* node);
     float distance(Node* node1, Node* node2);

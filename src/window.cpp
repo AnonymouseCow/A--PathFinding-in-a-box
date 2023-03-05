@@ -1,5 +1,7 @@
 #include "cell.h"
 #include "grid.h"
+#include "astar.h"
+#include <iostream>
 void display();
 void reshape(int,int);
 void init()
@@ -13,16 +15,20 @@ void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+    AStar A;
     // Center grid in window
     glTranslatef(-Grid::GRID_WIDTH / 2.0f, -Grid::GRID_HEIGHT / 2.0f, 0.0f);
     
     // Draw grid
-    Grid::buildGrid();
+    
+    Grid::buildGrid(&A);
+    A.findPath(&Grid::grid[0][0],&Grid::grid[50][50]);
     glutSwapBuffers();
 }
 
 int main(int argc, char **argv) {
+    std::cout.flush();
+    std::cout << "started" << std::endl;
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(500, 500);
