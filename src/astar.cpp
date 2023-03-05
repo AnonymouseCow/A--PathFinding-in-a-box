@@ -1,6 +1,7 @@
 #include "astar.h"
 #include "astarfinder.h"
 #include "cell.h"
+#include <math>
 #include <queue>
 #include <set>
 struct NodeCompare {
@@ -66,11 +67,11 @@ std::vector<Node*> AStar::getNeighbours(Node* node) {
 }
 
 float AStar::distance(Node* node1, Node* node2) {
-    // Distance calculation implementation goes here
+        return sqrtf(pow((node2->x-node1->x),2) + pow((node2->y-node1->y),2));
 }
 
 bool AStar::isObstacle(Node* node) {
-    // Obstacle detection implementation goes here
+    //Is this even necessary??
 }
 
 bool AStar::inBounds(Node* node) {
