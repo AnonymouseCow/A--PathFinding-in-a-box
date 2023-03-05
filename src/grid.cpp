@@ -7,7 +7,7 @@ void Grid::buildGrid(AStar* A) {
         for (int y = 0; y < Grid::GRID_SIZE; y++) {
             Cell& cell = grid[x][y];
             cell = Cell(false,x,y);
-            std::cout << "Pushing Cell" << std::endl;
+            std::cout << "Pushing Cell" << " (" << cell.x << ", " << cell.y << ")" << std::endl;
             A->getPrio()->push(&cell.node);
             glPushMatrix();
             glTranslatef(x * Grid::CELL_SIZE, y * Grid::CELL_SIZE, 0.0f);
