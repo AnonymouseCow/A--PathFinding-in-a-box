@@ -35,11 +35,11 @@ std::vector<Node*> AStar::findPath(Cell& startCell, Cell& endCell) {
                 }
 
                 // Compute f-score for successor
-                successor.g = current.g + distance(current, successor);
-                successor.h = distance(successor, endCell.node);
-                successor.f = successor.g + successor.h;
+                successor->g = current.g + distance(&current, successor);
+                successor->h = distance(successor, endCell.getNodeAddr());
+                successor->f = successor->g + successor->h;
 
-                open.push(successor);
+                open.push(*successor);
                 closed.insert(successor);
                 
             }
