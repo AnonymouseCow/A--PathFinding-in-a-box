@@ -1,0 +1,3 @@
+/home/awildfrog/hacks/glut/CMakeFiles/pathing.dir
+/home/awildfrog/hacks/glut/CMakeFiles/edit_cache.dir
+/home/awildfrog/hacks/glut/CMakeFiles/rebuild_cache.dir
