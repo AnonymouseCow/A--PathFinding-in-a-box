@@ -1,7 +1,7 @@
 #include "astar.h"
 #include "astarfinder.h"
 #include "cell.h"
-#include <math>
+#include <math.h>
 #include <queue>
 #include <set>
 struct NodeCompare {
