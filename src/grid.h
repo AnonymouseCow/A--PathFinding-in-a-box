@@ -6,12 +6,13 @@
 
 class Grid {
 public:
-    static constexpr int GRID_SIZE = 25;    // Number of cells in each dimension
+    static constexpr int GRID_SIZE = 50;    // Number of cells in each dimension
     static constexpr float CELL_SIZE = 0.1f; // Size of each cell in world units
     static constexpr float GRID_WIDTH = GRID_SIZE * CELL_SIZE;
     static constexpr float GRID_HEIGHT = GRID_SIZE * CELL_SIZE;
     static std::vector<std::vector<Cell>> grid; // Initialize all cells to non-obstacle, with default color and position
-    static void buildGrid(AStar *A);
+    static void buildGrid();
+    static void drawGrid();
 };
 
 #endif // GRID_H

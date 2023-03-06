@@ -9,17 +9,15 @@ class AStar {
 public:
     AStar();
     void findPath(Cell* startCell, Cell* endCell);
-    std::priority_queue<Node*, std::vector<Node*>, NodeCompareA>* getPrio();
-    std::set<Node*>* getClosed();
+    std::priority_queue<Cell*, std::vector<Cell*>, NodeCompareA>* getPrio();
+    std::set<Cell*>* getClosed();
 private:
 
-    static std::priority_queue<Node*, std::vector<Node*>, NodeCompareA> open;
-    static std::set<Node*> closed;
-    std::vector<Node*> reconstructPath(Node* endNode);
-    std::vector<Node*> getNeighbours(Node* node);
-    float distance(Node* node1, Node* node2);
-    bool isObstacle(Node* node);
-    bool inBounds(Node* node);
+    static std::priority_queue<Cell*, std::vector<Cell*>, NodeCompareA> open;
+    static std::set<Cell*> closed;
+    std::vector<Cell*> reconstructPath(Cell* cell);
+    std::vector<Cell*> getNeighbours(Cell* cell);
+    float distance(Cell* cell1, Cell* cell2);
 };
 
 #endif // ASTAR_H

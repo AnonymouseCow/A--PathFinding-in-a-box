@@ -3,7 +3,6 @@
 #include "astarfinder.h"
 class Cell;
 struct Node {
-    int x, y;
     float f, g, h;
     Cell* parent;
 };
@@ -14,8 +13,6 @@ struct Node {
         float x, y; // X and Y position of the cell in world units
         Node node;
         Cell(bool isObstacle, float x, float y) : isObstacle(isObstacle), x(x), y(y) {
-            node.x = x;
-            node.y = y;
             node.parent = this;
             if(!isObstacle){
             color[0] = 1.0f; // Set default color to white
@@ -28,22 +25,33 @@ struct Node {
             }
         }
         bool compareCells(Cell* otherCell) {
-            if(x == otherCell->x) {
-                if(y == otherCell->y) {
-                    return true;
-                }
+            std::cout << "comparing.." << std::endl;
+            if(otherCell == nullptr) {
+                std::cout << "null" << std::endl;
+                return false;
             }
-            return false;
+            return (otherCell->x == x && otherCell->y == y);
         }
         Node *getNodeAddr() {
-            Node *nodeaddr = &node;
-            return nodeaddr;
+            return &node;
         }
         void setColor(float r, float g, float b) {
             color[0] = r;
             color[1] = g;
             color[2] = b;
             glutPostRedisplay();
+        }
+        void setObstacle(bool value) {
+            this->isObstacle = value;
+            if(value) {
+                //if we are an obstacle
+                this->setColor(0.0f,0.0f,0.0f);
+                //black
+            } else {
+                //if we aren't
+                this->setColor(1.0f,1.0f,1.0f);
+                //white
+            }
         }
     };
 #endif

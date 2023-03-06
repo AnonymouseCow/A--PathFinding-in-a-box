@@ -5,81 +5,86 @@
 #include <queue>
 #include <set>
 #include <iostream>
-std::priority_queue<Node*, std::vector<Node*>, NodeCompareA> AStar::open;
-std::set<Node*> AStar::closed;
+std::priority_queue<Cell*, std::vector<Cell*>, NodeCompareA> AStar::open;
+std::set<Cell*> AStar::closed;
 AStar::AStar() {}
 void AStar::findPath(Cell* startCell, Cell* endCell) {
     // Add start node to open list
-        open.push(startCell->getNodeAddr());
-
+        std::cout << "Beginning pathfinding..";
+        std::cout << "START AT: " << " (" << startCell->x << ", " << startCell->y << ")" << std::endl; 
+        startCell->setColor(1.0f,0.0f,0.0f);
+        open.push(startCell);
+        Cell* current = nullptr;
         while (!open.empty()) {
-            Node* current = open.top();
+            current = open.top();
             open.pop();
+            closed.insert(current);
             std::cout << "open not empty" << std::endl;
-            std::cout << "Current Coords: (" << current->x <<", " << current->y << ")" << std::endl;
-            if (endCell->compareCells(current->parent)) {
-                std::cout << "found the end";
+            std::cout << "Node at (" << current->x << ", " << current->y << ") has priority " << current->getNodeAddr()->f << std::endl;
+           if (endCell->compareCells(current)) {
+               std::cout << "found the end";
                 endCell->setColor(1.0f,0.0f,0.0f);
-                break;
+               break;
             }
-
+            std::cout << "comp reached" << std::endl;
             // Generate successors and add to open list
-            for (Node *successor : getNeighbours(current)) {
-                if (closed.count(successor) > 0) {
-                    // Successor already visited
+            for (Cell* successor : getNeighbours(current)) {
+                const bool is_in = closed.find(successor) != closed.end();
+                if (is_in) {
+                    std::cout << "(" << successor->x << ", " << successor->y << ")" << " is closed." << std::endl;
                     continue;
                 }
-
+                std::cout << "(" << successor->x << ", " << successor->y << ")" << " is NOT closed." << std::endl;
                 // Compute f-score for successor
-                successor->g = current->g + distance(current, successor);
-                successor->h = distance(successor, endCell->getNodeAddr());
-                successor->f = successor->g + successor->h;
+                successor->getNodeAddr()->g = current->getNodeAddr()->g + distance(current, successor);
+                successor->getNodeAddr()->h = distance(successor, endCell);
+                //FAULT IN ABOVE CODE.
+                successor->getNodeAddr()->f = successor->getNodeAddr()->g + successor->getNodeAddr()->h;
+                //current = successor;
 
                 open.push(successor);
-                closed.insert(successor);
-                
+                //closed.insert(successor);
             }
         }
         if(open.empty()){
             std::cout << "open is empty" << std::endl;
+            startCell->setColor(0.0f,1.0f,0.0f);
             std::cout << "end is at: " << "(" << endCell->x << ", " << endCell->y << ")" << std::endl; 
         }
 }
-std::priority_queue<Node*, std::vector<Node*>, NodeCompareA> * AStar::getPrio() {
-    std::priority_queue<Node*, std::vector<Node*>, NodeCompareA>* prioptr = &open;
-    return prioptr;
+std::priority_queue<Cell*, std::vector<Cell*>, NodeCompareA> * AStar::getPrio() {
+    return &open;
 }
-std::set<Node*>* AStar::getClosed() {
-    std::set<Node*>* closeptr = &closed;
+std::set<Cell*>* AStar::getClosed() {
+    std::set<Cell*>* closeptr = &closed;
     return closeptr;
 }
-std::vector<Node*> AStar::reconstructPath(Node* endNode) {
-    // Path reconstruction implementation goes here
+std::vector<Cell*> AStar::reconstructPath(Cell* endNode) {
+    
 }
 
-std::vector<Node*> AStar::getNeighbours(Node* node) {
-    std::vector<Node*> neighbours;
+std::vector<Cell*> AStar::getNeighbours(Cell* cell) {
+    std::cout << "Getting Neighbours" << std::endl;
+    std::vector<Cell*> neighbours;
     for (int x = -1; x <= 1; x++) {
         for (int y = -1; y <= 1; y++) {
             if (x == 0 && y == 0) continue;
-            int checkX = node->x + x;
-            int checkY = node->y + y;
+            int checkX = cell->x + x;
+            int checkY = cell->y + y;
             if (checkX >= 0 && checkX < Grid::GRID_WIDTH && checkY >= 0 && checkY < Grid::GRID_HEIGHT) {
-                neighbours.push_back(Grid::grid[checkX][checkY].getNodeAddr());
+                Cell* neighbour = &Grid::grid[checkX][checkY];
+                if (!neighbour->isObstacle) {
+                    std::cout << "Valid neighbour at: " << "(" << neighbour->x << ", " << neighbour->y << ")" << std::endl;
+                    neighbours.push_back(neighbour);
+                } else if (x != 0 && y != 0) {
+                    // Diagonal neighbor is blocked, skip it
+                    continue;
+                }
             }
         }
     }
     return neighbours;
 }
-
-float AStar::distance(Node* node1, Node* node2) {
-        return sqrtf(pow((node2->x-node1->x),2) + pow((node2->y-node1->y),2));
-}
-
-bool AStar::isObstacle(Node* node) {
-    //Is this even necessary??
-}
-
-bool AStar::inBounds(Node* node) {
-    // Bounds checking implementation goes here
+float AStar::distance(Cell* cell1, Cell* cell2) {
+        return sqrtf(pow((cell2->x-cell1->x),2) + pow((cell2->y-cell1->y),2));
 }
