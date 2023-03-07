@@ -6,8 +6,10 @@ struct NodeCompare {
     }
 };
 struct NodeCompareA {
-    bool operator()(Cell* a, Cell* b) const {
+    bool operator()(const Cell* a, const Cell* b) const {
+        const double aF = a->getf();
+        const double bF = b->getf();
         // Compare nodes by their f-score
-        return ((a->getNodeAddr()->f) > (b->getNodeAddr()->f));
+        return aF > bF;
     }
 };
