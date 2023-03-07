@@ -1,9 +1,8 @@
 #include "cell.h"
 #include "grid.h"
 #include "astar.h"
-#include <iostream>
-#include <tuple>
-#include <math.h>
+#include "window.h"
+#define _GLIBCXX_USE_NANOSLEEP
 #define MB_LEFT   0
 #define MB_MIDDLE 1
 #define MB_RIGHT  2
@@ -21,10 +20,51 @@ uint32_t mouse_status = 0;
 int g_width;
 int g_height;
 float g_aspect;
+GLuint gFramesPerSecond;
+void FPS(void) {
+  static GLint Frames = 0;         // frames averaged over 1000mS
+  static GLuint Clock;             // [milliSeconds]
+  static GLuint PreviousClock = 0; // [milliSeconds]
+  static GLuint NextClock = 0;     // [milliSeconds]
 
+  ++Frames;
+  Clock = glutGet(GLUT_ELAPSED_TIME); //has limited resolution, so average over 1000mS
+  if ( Clock < NextClock ) return;
+
+  gFramesPerSecond = Frames/1; // store the averaged number of frames per second
+
+  PreviousClock = Clock;
+  NextClock = Clock+1000; // 1000mS=1S in the future
+  Frames=0;
+}
+void timer(int value)
+{
+  const int desiredFPS=120;
+  glutTimerFunc(1000/desiredFPS, timer, ++value);
+
+  //put your specific idle code here
+  //... this code will run at desiredFPS
+  //end your specific idle code here
+
+  FPS(); //only call once per frame loop to measure FPS 
+  glutPostRedisplay();
+}
 void display();
 void reshape(int,int);
 void handleMouse(int,int,int,int);
+
+void startLoops(int argc, char **argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowSize(600, 600);
+    glutCreateWindow("2D Grid of Cells");
+    glutTimerFunc(0,timer,0);
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutMouseFunc(handleMouse);
+    
+    glutMainLoop();
+}
 std::pair<int, int> pixelToGridCoords(int x, int y) {
     int gridX = x / (double) g_width
            * (Grid::GRID_SIZE - 0) + 0;
@@ -52,20 +92,11 @@ void display() {
 }
 
 int main(int argc, char **argv) {
-    AStar A;
+    //std::thread bt(task, 500);
     std::cout.flush();
     std::cout << "started" << std::endl;
     Grid::buildGrid();
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    glutInitWindowSize(600, 600);
-    glutCreateWindow("2D Grid of Cells");
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-    glutMouseFunc(handleMouse);
-    A.findPath(&Grid::grid[25][25], &Grid::grid[0][0]);
-    
-    glutMainLoop();
+    startLoops(argc, argv);
     return 0;
 }
 
@@ -104,8 +135,11 @@ void handleMouse(int button, int state, int x, int y) {
         break;
         case MB_RIGHT:
             if(!isUp) {
+                AStar A;
                 Grid::grid[gridX][gridY].setObstacle(false);
                 std::cout << "RIGHT MB PRESSED: " << "(" << gridX << ", " << gridY<< ")" << std::endl;
+                A.findPath(&Grid::grid[0][0], &Grid::grid[49][49]);
+
             } 
         break;
     }

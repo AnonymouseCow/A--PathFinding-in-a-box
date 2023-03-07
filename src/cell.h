@@ -4,6 +4,7 @@
 class Cell;
 struct Node {
     float f, g, h;
+    float length;
     Cell* parent;
 };
     class Cell {
@@ -14,6 +15,7 @@ struct Node {
         Node node;
         Cell(bool isObstacle, float x, float y) : isObstacle(isObstacle), x(x), y(y) {
             node.parent = this;
+            this->node.length = 1;
             if(!isObstacle){
             color[0] = 1.0f; // Set default color to white
             color[1] = 1.0f;
@@ -35,11 +37,11 @@ struct Node {
         Node *getNodeAddr() {
             return &node;
         }
+        double getf() const { return this->node.f; }
         void setColor(float r, float g, float b) {
             color[0] = r;
             color[1] = g;
             color[2] = b;
-            glutPostRedisplay();
         }
         void setObstacle(bool value) {
             this->isObstacle = value;
