@@ -32,7 +32,7 @@ void AStar::findPath(Cell* startCell, Cell* endCell) {
             }
             std::cout << "comp reached" << std::endl;
             // Generate successors and add to open list
-            for (Cell* successor : getNeighbours(current)) {
+            for (Cell* successor : getNeighbours(current, endCell)) {
                 const bool is_in = closed.find(successor) != closed.end();
                 if (is_in) {
                     std::cout << "(" << successor->x << ", " << successor->y << ")" << " is closed." << std::endl;
