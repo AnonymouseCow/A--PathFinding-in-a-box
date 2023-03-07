@@ -81,8 +81,8 @@ std::vector<Cell*> AStar::getNeighbours(Cell* cell, Cell* endCell) {
             int checkY = cell->y + y;
             if (checkX >= 0 && checkX < Grid::GRID_SIZE && checkY >= 0 && checkY < Grid::GRID_SIZE) {
                 Cell* neighbour = &Grid::grid[checkX][checkY];
-                const bool isEnd = endCell->compareCells(cell);
-                if (!neighbour->isObstacle && isEnd) {
+                //const bool isEnd = endCell->compareCells(cell);
+                if (!neighbour->isObstacle/* && isEnd*/) {
                     neighbours.push_back(neighbour);
                 } else if (x != 0 && y != 0) {
                     // Diagonal neighbor is blocked, skip it
