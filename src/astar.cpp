@@ -33,11 +33,6 @@ void AStar::findPath(Cell* startCell, Cell* endCell) {
             std::cout << "comp reached" << std::endl;
             // Generate successors and add to open list
             for (Cell* successor : getNeighbours(current, endCell)) {
-                const bool is_in = closed.find(successor) != closed.end();
-                if (is_in) {
-                    std::cout << "(" << successor->x << ", " << successor->y << ")" << " is closed." << std::endl;
-                    continue;
-                }
                 std::cout << "(" << successor->x << ", " << successor->y << ")" << " is NOT closed." << std::endl;
                 // Compute f-score for successor
                 successor->getNodeAddr()->g = current->getNodeAddr()->g + distance(current, successor);
@@ -86,8 +81,8 @@ std::vector<Cell*> AStar::getNeighbours(Cell* cell, Cell* endCell) {
             int checkY = cell->y + y;
             if (checkX >= 0 && checkX < Grid::GRID_SIZE && checkY >= 0 && checkY < Grid::GRID_SIZE) {
                 Cell* neighbour = &Grid::grid[checkX][checkY];
-                const bool isClosed = endCell->compareCells(cell);
-                if (!neighbour->isObstacle) {
+                const bool isEnd = endCell->compareCells(cell);
+                if (!neighbour->isObstacle && isEnd) {
                     neighbours.push_back(neighbour);
                 } else if (x != 0 && y != 0) {
                     // Diagonal neighbor is blocked, skip it
