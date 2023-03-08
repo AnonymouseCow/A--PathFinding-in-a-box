@@ -45,9 +45,6 @@ void timer(int value)
   const int desiredFPS=120;
   glutTimerFunc(1000/desiredFPS, timer, ++value);
 
-  //put your specific idle code here
-  //... this code will run at desiredFPS
-  //end your specific idle code here
 
   FPS(); //only call once per frame loop to measure FPS 
   glutPostRedisplay();
