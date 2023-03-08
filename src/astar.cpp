@@ -3,6 +3,7 @@
 #include "grid.h"
 #include <math.h>
 #include <queue>
+#include <algorithm>
 #include <set>
 #include <iostream>
 #include <unistd.h>
@@ -16,9 +17,13 @@ void AStar::findPath(Cell* startCell, Cell* endCell) {
         endCell->setColor(0.0f,0.0f,1.0f);
         open.push(startCell);
         Cell* current = nullptr;
+        Cell* last = nullptr;
         while (!open.empty()) {
-            //usleep(200000);
-            current = open.top();
+            //usleep(20000);
+            last = current;
+
+            if(last)
+            current->getNodeAddr()->lastNeighbor = last;
             std::cout << "Picking (" << current->x << ", " << current->y << ") Recalculated F: " << current->getNodeAddr()->f << std::endl;  
             current->setColor(1.0f,0.0f,0.0f);
             open.pop();
@@ -32,16 +37,25 @@ void AStar::findPath(Cell* startCell, Cell* endCell) {
             }
             std::cout << "comp reached" << std::endl;
             // Generate successors and add to open list
+            std::vector<Cell*> res = std::move(open).container();
+            Cell* lastNeighbor;
             for (Cell* successor : getNeighbours(current, endCell)) {
                 std::cout << "(" << successor->x << ", " << successor->y << ")" << " is NOT closed." << std::endl;
                 // Compute f-score for successor
-                successor->getNodeAddr()->g = current->getNodeAddr()->g + distance(current, successor);
+                
+                if(std::find(res.begin(), res.end(), successor) != res.end()) {
+                    successor->getNodeAddr()->g = current->getNodeAddr()->g + distance(current, successor);
+                }
                 successor->getNodeAddr()->h = distance(successor, endCell);
                 successor->getNodeAddr()->f = successor->getNodeAddr()->g + successor->getNodeAddr()->h;
-                //std::vector<Cell*> res = std::move(open).container();
-                const bool is_in = closed.find(successor) != closed.end();
-                if (is_in) {
+                const bool isClosed = closed.find(successor) != closed.end();
+                if (isClosed) {
                     std::cout << " [CLOSED] " << "Valid neighbour at: " << "(" << successor->x << ", " << successor->y << ") F:" << successor->getNodeAddr()->f << std::endl;
+                    /*if(lastNeighbor->getNodeAddr()->f > successor->getNodeAddr()->f) {
+                        if (successor == bestNeighbor) continue;
+                        bestNeighbor = successor;
+                    }
+                    */
                     successor->setColor(.415f,.4256f,.641f);
                     continue;
                 }
@@ -50,8 +64,9 @@ void AStar::findPath(Cell* startCell, Cell* endCell) {
                 // Compute f-score for successor       
                 //current = successor;
                 open.push(successor);
-                closed.insert(successor);
+                //closed.insert(successor);
             }
+            //open.push(bestNeighbor);
         }
         closed.insert(current);
         if(open.empty()){
@@ -81,8 +96,9 @@ std::vector<Cell*> AStar::getNeighbours(Cell* cell, Cell* endCell) {
             int checkY = cell->y + y;
             if (checkX >= 0 && checkX < Grid::GRID_SIZE && checkY >= 0 && checkY < Grid::GRID_SIZE) {
                 Cell* neighbour = &Grid::grid[checkX][checkY];
-                //const bool isEnd = endCell->compareCells(cell);
-                if (!neighbour->isObstacle/* && isEnd*/) {
+                const bool isEnd = endCell->compareCells(cell);
+                if (!neighbour->isObstacle) {
+                    if(isEnd) break;
                     neighbours.push_back(neighbour);
                 } else if (x != 0 && y != 0) {
                     // Diagonal neighbor is blocked, skip it
@@ -92,6 +108,23 @@ std::vector<Cell*> AStar::getNeighbours(Cell* cell, Cell* endCell) {
         }
     }
     return neighbours;
+}
+std::set<Cell*> AStar::getClosedNeighbours(Cell* cell) {
+    std::set<Cell*> closedNeighbours;
+    for (int x = -1; x <= 1; x++) {
+        for (int y = -1; y <= 1; y++) {
+            if (x == 0 && y == 0) continue;
+            int checkX = cell->x + x;
+            int checkY = cell->y + y;
+            if (checkX >= 0 && checkX < Grid::GRID_SIZE && checkY >= 0 && checkY < Grid::GRID_SIZE) {
+                Cell* neighbour = &Grid::grid[checkX][checkY];
+                if((closed.find(neighbour) != closed.end()) || neighbour->isObstacle) {
+                    closedNeighbours.insert(neighbour);
+                }
+            }
+        }
+    }
+    return closedNeighbours;
 }
 float AStar::distance(Cell* cell1, Cell* cell2) {
     

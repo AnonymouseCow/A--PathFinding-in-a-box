@@ -30,6 +30,7 @@ private:
     static Extractable<std::priority_queue<Cell*, std::vector<Cell*>, NodeCompareA>> open;
     static std::set<Cell*> closed;
     std::vector<Cell*> reconstructPath(Cell* cell);
+    std::set<Cell*> getClosedNeighbours(Cell* cell);
     std::vector<Cell*> getNeighbours(Cell* cell, Cell* endCell);
     float distance(Cell* cell1, Cell* cell2);
 };

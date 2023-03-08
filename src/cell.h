@@ -5,6 +5,7 @@ class Cell;
 struct Node {
     float f, g, h;
     float length;
+    Cell* lastNeighbor;
     Cell* parent;
 };
     class Cell {

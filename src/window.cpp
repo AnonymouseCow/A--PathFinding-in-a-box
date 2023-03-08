@@ -20,6 +20,9 @@ uint32_t mouse_status = 0;
 int g_width;
 int g_height;
 float g_aspect;
+AStar A;
+bool g_mousedown;
+std::pair<int*,int*> mouseCoords;
 GLuint gFramesPerSecond;
 void FPS(void) {
   static GLint Frames = 0;         // frames averaged over 1000mS
@@ -52,6 +55,8 @@ void timer(int value)
 void display();
 void reshape(int,int);
 void handleMouse(int,int,int,int);
+void handleDrag(int,int);
+void keyboardHandler(unsigned char,int,int);
 
 void startLoops(int argc, char **argv) {
     glutInit(&argc, argv);
@@ -59,10 +64,11 @@ void startLoops(int argc, char **argv) {
     glutInitWindowSize(600, 600);
     glutCreateWindow("2D Grid of Cells");
     glutTimerFunc(0,timer,0);
+    glutMotionFunc(handleDrag);
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyboardHandler);
     glutReshapeFunc(reshape);
     glutMouseFunc(handleMouse);
-    
     glutMainLoop();
 }
 std::pair<int, int> pixelToGridCoords(int x, int y) {
@@ -129,18 +135,38 @@ void handleMouse(int button, int state, int x, int y) {
     switch(b) {
         case MB_LEFT:
             if(!isUp) {
-                Grid::grid[gridX][gridY].setObstacle(true);
                 std::cout << "LEFT MB PRESSED: " << "(" << gridX << ", " << gridY<< ")" << std::endl;
-            } 
+                mouseCoords = std::make_pair(&gridX, &gridY);
+                Grid::grid[gridX][gridY].setObstacle(true);
+                g_mousedown = true;
+            }  else {
+                g_mousedown = false;
+            }
         break;
         case MB_RIGHT:
             if(!isUp) {
-                AStar A;
                 Grid::grid[gridX][gridY].setObstacle(false);
                 std::cout << "RIGHT MB PRESSED: " << "(" << gridX << ", " << gridY<< ")" << std::endl;
-                A.findPath(&Grid::grid[0][0], &Grid::grid[49][49]);
 
             } 
         break;
+    }
+}
+void keyboardHandler(unsigned char key, int x, int y) {
+    std::cout << "keypress" << std::endl;
+    switch (key) 
+    {    
+       case 113: 
+       A.findPath(&Grid::grid[0][0], &Grid::grid[49][49]); 
+       break;
+    }
+}
+void handleDrag(int x, int y) {
+    std::cout << "Dragging!" << std::endl;
+    int gridX;
+    int gridY;
+    std::tie(gridX, gridY) = pixelToGridCoords(x, y);
+    if(g_mousedown) {
+        Grid::grid[gridX][gridY].setObstacle(true);
     }
 }
